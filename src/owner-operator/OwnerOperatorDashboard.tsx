@@ -47,9 +47,6 @@ const ownerFields: FieldDef[] = [
 export function OwnerOperatorDashboard() {
   const [state, setState] = useState<ModelState>(() => loadLocalState())
   const [modelName, setModelName] = useState(() => activeVersion(state)?.name || 'Base case')
-  const [newQuestion, setNewQuestion] = useState('')
-  const [commentAuthor, setCommentAuthor] = useState('')
-  const [commentBody, setCommentBody] = useState('')
   const output = useMemo(() => calculateOwnerOperatorModel(state.blockCostModel), [state.blockCostModel])
 
   useEffect(() => {
@@ -81,50 +78,6 @@ export function OwnerOperatorDashboard() {
     const nextState = saveVersion(state, modelName, state.blockCostModel)
     setState(nextState)
     setModelName(activeVersion(nextState)?.name || modelName)
-  }
-
-  function updateAnswer(questionId: string, answer: string) {
-    setState(
-      normalizeModelState({
-        ...state,
-        questionAnswers: {
-          ...state.questionAnswers,
-          [questionId]: answer,
-        },
-      }),
-    )
-  }
-
-  function addQuestion() {
-    const text = newQuestion.trim()
-    if (!text) return
-    setState(
-      normalizeModelState({
-        ...state,
-        questions: [...state.questions, { id: `q${Date.now()}`, text }],
-      }),
-    )
-    setNewQuestion('')
-  }
-
-  function addComment() {
-    const body = commentBody.trim()
-    if (!body) return
-    setState(
-      normalizeModelState({
-        ...state,
-        comments: [
-          ...state.comments,
-          {
-            id: `comment-${Date.now()}`,
-            author: commentAuthor.trim(),
-            body,
-            createdAt: new Date().toISOString(),
-          },
-        ],
-      }),
-    )
-    setCommentBody('')
   }
 
   function resetModel() {
@@ -220,33 +173,10 @@ export function OwnerOperatorDashboard() {
 
           <section className="owner-statement-section">
             <header>
-              <h4>Working Decisions & Outstanding Items</h4>
-              <p>Local notes for the carrier discussion and consultation prep.</p>
+              <h4>Model Notes</h4>
+              <p>Key assumptions reflected in the lease-on settlement view.</p>
             </header>
-            <h5>Decisions reflected in the model</h5>
             <Notes model={state.blockCostModel} output={output} />
-            <h5>Questions</h5>
-            <QuestionList state={state} onAnswer={updateAnswer} />
-            <div className="owner-inline-form">
-              <input
-                value={newQuestion}
-                onChange={(event) => setNewQuestion(event.target.value)}
-                placeholder="Add another question..."
-                maxLength={240}
-              />
-              <button type="button" onClick={addQuestion}>
-                Add question
-              </button>
-            </div>
-            <h5>Comments</h5>
-            <Comments comments={state.comments} />
-            <div className="owner-comment-form">
-              <input value={commentAuthor} onChange={(event) => setCommentAuthor(event.target.value)} placeholder="Name" maxLength={40} />
-              <textarea value={commentBody} onChange={(event) => setCommentBody(event.target.value)} placeholder="Add a comment..." maxLength={1000} rows={2} />
-              <button type="button" onClick={addComment}>
-                Add comment
-              </button>
-            </div>
           </section>
         </section>
       </div>
@@ -356,50 +286,6 @@ function Notes({
   )
 }
 
-function QuestionList({
-  state,
-  onAnswer,
-}: {
-  state: ModelState
-  onAnswer: (questionId: string, answer: string) => void
-}) {
-  if (state.questions.length === 0) return <p className="owner-empty">No open questions.</p>
-  return (
-    <ol className="owner-question-list">
-      {state.questions.map((question) => (
-        <li key={question.id}>
-          <label>
-            <span>{question.text}</span>
-            <textarea
-              value={state.questionAnswers[question.id] || ''}
-              onChange={(event) => onAnswer(question.id, event.target.value)}
-              rows={3}
-              placeholder="Answer or clarification..."
-            />
-          </label>
-        </li>
-      ))}
-    </ol>
-  )
-}
-
-function Comments({ comments }: { comments: ModelState['comments'] }) {
-  if (comments.length === 0) return <p className="owner-empty">No comments yet.</p>
-  return (
-    <div className="owner-comments">
-      {comments.map((comment) => (
-        <article className="owner-comment" key={comment.id}>
-          <header>
-            <strong>{comment.author || 'Comment'}</strong>
-            <time>{formatCommentTime(comment.createdAt)}</time>
-          </header>
-          <p>{comment.body}</p>
-        </article>
-      ))}
-    </div>
-  )
-}
-
 function loadLocalState(): ModelState {
   if (typeof window === 'undefined') return normalizeModelState({})
   try {
@@ -423,16 +309,5 @@ function syncActiveVersion(state: ModelState): ModelState {
         : version,
     ),
     updatedAt: now,
-  })
-}
-
-function formatCommentTime(value: string) {
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) return ''
-  return date.toLocaleString(undefined, {
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
   })
 }
