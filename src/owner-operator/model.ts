@@ -31,21 +31,6 @@ export const DEFAULT_BLOCK_COST_MODEL: BlockCostModel = {
   leaseAdminMonthly: 350
 };
 
-export const DEFAULT_QUESTIONS = [
-  {
-    id: "q1",
-    text: "What should I use for plates, IRP, registration, and related pass-through costs in the model?"
-  },
-  {
-    id: "q2",
-    text: "How would settlement timing work after Amazon pays the carrier?"
-  },
-  {
-    id: "q3",
-    text: "If either of us wanted to unwind the arrangement, what would you expect around notice, chargebacks, or equipment return?"
-  }
-];
-
 export function normalizeBlockCostModel(value?: Partial<BlockCostModel> | null): BlockCostModel {
   const incoming = value && typeof value === "object" ? value : {};
   if (incoming.ownerModelVersion !== DEFAULT_BLOCK_COST_MODEL.ownerModelVersion) {
@@ -79,33 +64,11 @@ export function normalizeModelState(value?: Partial<ModelState> | null): ModelSt
     ? String(value?.activeModelId)
     : modelVersions[0].id;
   const activeModel = modelVersions.find((version) => version.id === activeModelId) ?? modelVersions[0];
-  const questions = Array.isArray(value?.questions)
-    ? value.questions.slice(0, 30).map((question, index) => ({
-      id: sanitizeId(question?.id) || `q${index + 1}`,
-      text: String(question?.text || "").slice(0, 240)
-    })).filter((question) => question.text)
-    : DEFAULT_QUESTIONS;
-  const questionIds = new Set(questions.map((question) => question.id));
 
   return {
     activeModelId,
     modelVersions,
     blockCostModel: normalizeBlockCostModel(activeModel.blockCostModel),
-    questions,
-    questionAnswers: Object.fromEntries(
-      Object.entries(value?.questionAnswers || {})
-        .slice(0, 50)
-        .filter(([key]) => questionIds.has(key))
-        .map(([key, entry]) => [String(key).slice(0, 80), String(entry ?? "").slice(0, 4000)])
-    ),
-    comments: Array.isArray(value?.comments)
-      ? value.comments.slice(0, 100).map((comment, index) => ({
-        id: sanitizeId(comment?.id) || `comment-${index + 1}`,
-        author: String(comment?.author || "").slice(0, 40),
-        body: String(comment?.body || "").slice(0, 1000),
-        createdAt: typeof comment?.createdAt === "string" ? comment.createdAt.slice(0, 40) : now
-      })).filter((comment) => comment.body)
-      : [],
     updatedAt: typeof value?.updatedAt === "string" ? value.updatedAt : ""
   };
 }

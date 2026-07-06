@@ -35,25 +35,10 @@ export type ModelVersion = {
   blockCostModel: BlockCostModel;
 };
 
-export type CollaborationQuestion = {
-  id: string;
-  text: string;
-};
-
-export type ModelComment = {
-  id: string;
-  author: string;
-  body: string;
-  createdAt: string;
-};
-
 export type ModelState = {
   activeModelId: string;
   modelVersions: ModelVersion[];
   blockCostModel: BlockCostModel;
-  questions: CollaborationQuestion[];
-  questionAnswers: Record<string, string>;
-  comments: ModelComment[];
   updatedAt?: string;
 };
 
