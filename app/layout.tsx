@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'Trucking The Seven Seas',
   description:
     'Trucking The Seven Seas gives drivers transparent pay breakdowns, trucking resources, videos, and consultation booking.',
+  icons: {
+    icon: '/ttss-logo-mark.png',
+  },
 }
 
 export const viewport: Viewport = {

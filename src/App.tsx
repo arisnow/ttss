@@ -7,6 +7,7 @@ import {
   Check,
   ChevronRight,
   ClipboardList,
+  ExternalLink,
   FileSpreadsheet,
   Fuel,
   Gauge,
@@ -16,7 +17,6 @@ import {
   Route,
   ShieldCheck,
   TrendingUp,
-  Truck,
   WalletCards,
   X,
 } from 'lucide-react'
@@ -24,79 +24,123 @@ import {
 const payPaths = [
   {
     id: 'company',
-    label: 'Company',
-    gross: '$1,350',
-    fuel: 'Covered',
-    fixed: '$0',
-    net: '$1,145',
+    label: 'Company Driver',
+    shortLabel: 'Company',
+    weeks: '34 Weeks',
+    gross: 'NA',
+    expenses: 'NA',
+    profitPerMile: '$0.54',
+    net: '$61,616.67',
     note: 'Best baseline for learning freight lanes and pay language.',
   },
   {
     id: 'lease',
-    label: 'Lease',
-    gross: '$4,850',
-    fuel: '$1,420',
-    fixed: '$1,210',
-    net: '$1,390',
+    label: 'Lease Operator',
+    shortLabel: 'Lease',
+    weeks: '20 Weeks',
+    gross: '$78,844.86',
+    expenses: '$47,374.84',
+    profitPerMile: '$0.72',
+    net: '$31,470.02',
     note: 'Looks big up top, but deductions decide the week.',
   },
   {
     id: 'landstar',
-    label: 'Landstar',
-    gross: '$6,780',
-    fuel: '$1,860',
-    fixed: '$880',
-    net: '$2,740',
+    label: 'O/O Leased On',
+    shortLabel: 'O/O Leased On',
+    weeks: '37 Weeks',
+    gross: '$135,734.79',
+    expenses: '$64,972.68',
+    profitPerMile: '$0.90',
+    net: '$70,762.11',
     note: 'More control, more planning, and more deadhead discipline.',
   },
   {
     id: 'authority',
-    label: 'Own Authority',
-    gross: '$8,240',
-    fuel: '$2,120',
-    fixed: '$1,540',
-    net: '$3,060',
+    label: 'O/O W/ Authority',
+    shortLabel: 'Authority',
+    weeks: '52 Weeks',
+    gross: '$207,080.49',
+    expenses: '$129,657.73',
+    profitPerMile: '$0.71',
+    net: '$77,422.76',
     note: 'Spot-market upside with dispatch, compliance, and cash-flow risk.',
   },
 ] as const
 
-const consultingOptions = [
+const responseOptions = [
   {
-    title: '30-minute reality check',
-    price: '$75',
-    detail: 'Pressure-test a job offer, lease pitch, or pay plan before you move.',
+    title: 'Flat-rate video response',
+    price: '$100',
+    detail: 'Send a focused list of questions and get a direct video answer from Tim.',
   },
   {
-    title: '60-minute deep dive',
-    price: '$145',
-    detail: 'Walk through your numbers, spreadsheet, deductions, and next steps.',
+    title: 'Private video',
+    price: '1:1',
+    detail: 'A private response between you and Tim when the topic should stay off-channel.',
   },
   {
-    title: 'Authority setup review',
-    price: '$225',
-    detail: 'Review startup costs, load-board assumptions, lanes, and risk points.',
+    title: 'Anonymous livestream',
+    price: 'Recommended',
+    detail: 'Tim keeps you anonymous while the audience can surface useful questions.',
   },
 ] as const
 
-const resources = [
-  'Pay spreadsheets',
-  'Company vs lease checklist',
-  'Owner-operator cost worksheet',
-  'Questions to ask recruiters',
-]
-
 const videos = [
-  'Final numbers at Knight',
-  'Lease operator pay explained',
-  'Landstar weekly breakdown',
-]
+  {
+    number: '01',
+    title: 'Final Numbers as Knight Transportation Company Driver',
+    youtubeId: 'hPpP9oHtZzw',
+    sheet:
+      'https://docs.google.com/spreadsheets/d/1wGEHZkK7Y0jglo9Wy-lk8_KGth-wdDAONiXbmh5H6J8/edit?gid=1089462003#gid=1089462003',
+    status: '',
+  },
+  {
+    number: '02',
+    title: 'Final Numbers as Knight Transportation Lease Operator',
+    youtubeId: 'IjSNa1VVAxY',
+    sheet:
+      'https://docs.google.com/spreadsheets/d/19wKorxQCaQWMsK7rjDo1e_xHzXbFUuPUlpm7HWDv20E/edit?gid=196419355#gid=196419355',
+    status: '',
+  },
+  {
+    number: '03',
+    title: 'Final Numbers as O/O Leased Onto Landstar',
+    youtubeId: 'iOqV2zeAv0Q',
+    sheet:
+      'https://docs.google.com/spreadsheets/d/1GRc2Propb95tHqjA5SQY7fg16c67PXQ4Or0mBidh1cU/edit?gid=1522467381#gid=1522467381',
+    status: '',
+  },
+  {
+    number: '04',
+    title: 'Final Numbers Running the Spot Market as O/O with Authority',
+    youtubeId: 'jT1PVQRJv4Q',
+    sheet:
+      'https://docs.google.com/spreadsheets/d/1OM_01BVB9uGBCQtLklKFDjiGXB7sj6vvC-cWnuRusOc/edit?gid=1522467381#gid=1522467381',
+    status: '',
+  },
+  {
+    number: '05',
+    title: 'Numbers Running Amazon Relay Owner Operator Power Only',
+    youtubeId: 'Hbj8ZDJ2898',
+    sheet:
+      'https://docs.google.com/spreadsheets/d/1OM_01BVB9uGBCQtLklKFDjiGXB7sj6vvC-cWnuRusOc/edit?gid=1045399100#gid=1045399100',
+    status: 'Ongoing',
+  },
+] as const
+
+const synopsisPoints = [
+  'Transparent trucking pay from company driver through lease operator, leased-on owner operator, authority, and Amazon Relay power-only work.',
+  'Final-number videos paired with public spreadsheets so viewers can see revenue, expenses, net, and context instead of relying on recruiter math.',
+  'Practical road commentary about deductions, freight choices, deadhead, home time, and the tradeoffs behind each business model.',
+] as const
 
 function App() {
   const [activePath, setActivePath] = useState<(typeof payPaths)[number]['id']>(
     'landstar',
   )
-  const [selectedConsult, setSelectedConsult] = useState<string>(
-    consultingOptions[1].title,
+  const [selectedResponse, setSelectedResponse] = useState<string>(
+    responseOptions[0].title,
   )
   const [menuOpen, setMenuOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -111,7 +155,7 @@ function App() {
       <header className="topbar">
         <a className="brand" href="#top" aria-label="Trucking The Seven Seas home">
           <span className="brand-mark">
-            <Truck size={22} strokeWidth={2.2} />
+            <img src="/ttss-logo-mark.png" alt="" />
           </span>
           <span>Trucking The Seven Seas</span>
         </a>
@@ -143,8 +187,8 @@ function App() {
               <h1>See what trucking really pays</h1>
               <p>
                 Real weekly numbers, road-tested advice, and one-on-one guidance from
-                a working trucker who has run company, lease, Landstar, and authority
-                lanes.
+                a working trucker who has run company, lease operator, owner operator
+                leased on and owner operator with authority.
               </p>
               <div className="hero-actions">
                 <a className="button primary" href="#consulting">
@@ -169,7 +213,7 @@ function App() {
           </div>
           <div>
             <ShieldCheck size={22} />
-            <span>Decisions before contracts</span>
+            <span>Know the numbers before you move</span>
           </div>
         </section>
 
@@ -178,7 +222,8 @@ function App() {
             <h2>Pay breakdowns without the recruiter math</h2>
             <p>
               Compare real weekly revenue, fuel, deductions, home time, and take-home
-              context across company, lease, leased-on, and authority paths.
+              context across company, lease operator, owner operator leased on and
+              owner operator with authority.
             </p>
             <a className="text-link" href="#resources">
               Open the spreadsheets <ChevronRight size={17} />
@@ -193,14 +238,16 @@ function App() {
                   className={path.id === activePath ? 'active' : ''}
                   onClick={() => setActivePath(path.id)}
                 >
-                  {path.label}
+                  {path.shortLabel}
                 </button>
               ))}
             </div>
             <div className="ledger-head">
               <div>
                 <span>Selected path</span>
-                <strong>{currentPayPath.label}</strong>
+                <strong>
+                  {currentPayPath.label} <em>{currentPayPath.weeks}</em>
+                </strong>
               </div>
               <TrendingUp size={28} />
             </div>
@@ -210,15 +257,15 @@ function App() {
                 <dd>{currentPayPath.gross}</dd>
               </div>
               <div>
-                <dt>Fuel</dt>
-                <dd>{currentPayPath.fuel}</dd>
+                <dt>Expenses (not fuel)</dt>
+                <dd>{currentPayPath.expenses}</dd>
               </div>
               <div>
-                <dt>Fixed Costs</dt>
-                <dd>{currentPayPath.fixed}</dd>
+                <dt>Profit Per Mile</dt>
+                <dd>{currentPayPath.profitPerMile}</dd>
               </div>
               <div className="net-row">
-                <dt>Net Before Taxes</dt>
+                <dt>Net</dt>
                 <dd>{currentPayPath.net}</dd>
               </div>
               <div className="note-row">
@@ -234,8 +281,8 @@ function App() {
             <Play size={34} fill="currentColor" />
             <h2>Latest from the channel</h2>
             <p>
-              Weekly-style pay recaps, spreadsheet context, carrier lessons, and the
-              fine print most new drivers never get shown.
+              Final numbers videos paired with the spreadsheets behind each position,
+              plus the current Amazon Relay power-only series as it develops.
             </p>
             <a
               className="button secondary"
@@ -247,14 +294,29 @@ function App() {
             </a>
           </div>
           <div className="video-rail" aria-label="Featured video topics">
-            {videos.map((video, index) => (
-              <article className="video-tile" key={video}>
-                <div className="thumbnail">
-                  <Play size={24} fill="currentColor" />
-                  <span>0{index + 1}</span>
+            {videos.map((video) => (
+              <article className="video-tile" key={video.youtubeId}>
+                <div className="video-frame">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${video.youtubeId}`}
+                    title={video.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
                 </div>
-                <h3>{video}</h3>
-                <p>Numbers, context, and practical takeaways from the road.</p>
+                <span className="video-number">
+                  {video.number}
+                  {video.status ? <small>{video.status}</small> : null}
+                </span>
+                <h3>{video.title}</h3>
+                <a
+                  className="spreadsheet-link"
+                  href={video.sheet}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Open spreadsheet <ExternalLink size={15} />
+                </a>
               </article>
             ))}
           </div>
@@ -262,19 +324,25 @@ function App() {
 
         <section className="section consulting-section" id="consulting">
           <div className="consulting-copy">
-            <h2>Book a straight-answer trucking consultation</h2>
+            <h2>Book a straight-answer video response</h2>
             <p>
               Get practical guidance on pay structures, lease decisions,
               owner-operator costs, spreadsheets, and next moves before you sign or
               scale.
             </p>
+            <p>
+              Send Tim a focused list of up to 10 questions. He will answer them in a
+              video response that can stay private between you and him, or become an
+              anonymous livestream where the audience can add useful questions and
+              point out concerns that may otherwise be missed.
+            </p>
             <div className="consult-options" aria-label="Consultation options">
-              {consultingOptions.map((option) => (
+              {responseOptions.map((option) => (
                 <button
                   type="button"
                   key={option.title}
-                  className={selectedConsult === option.title ? 'selected' : ''}
-                  onClick={() => setSelectedConsult(option.title)}
+                  className={selectedResponse === option.title ? 'selected' : ''}
+                  onClick={() => setSelectedResponse(option.title)}
                 >
                   <span>
                     <strong>{option.title}</strong>
@@ -296,8 +364,8 @@ function App() {
             <div className="form-head">
               <WalletCards size={25} />
               <div>
-                <span>Selected consult</span>
-                <strong>{selectedConsult}</strong>
+                <span>Selected response</span>
+                <strong>{selectedResponse}</strong>
               </div>
             </div>
             <label>
@@ -309,30 +377,33 @@ function App() {
               <input required name="email" type="email" placeholder="you@example.com" />
             </label>
             <label>
-              Trucking stage
-              <select name="stage" defaultValue="Lease decision">
-                <option>New driver</option>
-                <option>Company driver</option>
-                <option>Lease decision</option>
-                <option>Owner-operator</option>
-                <option>Running authority</option>
+              Response format
+              <select name="format" defaultValue="Private video">
+                <option>Private video</option>
+                <option>Anonymous livestream</option>
+                <option>Not sure yet</option>
               </select>
             </label>
             <label>
-              What do you want help with?
+              Your questions
               <textarea
                 required
-                name="message"
-                placeholder="Tell me what decision, offer, or numbers you want to review."
+                maxLength={1600}
+                name="questions"
+                placeholder="Send up to 10 focused questions. Include the decision, offer, spreadsheet, or numbers you want Tim to respond to."
               />
             </label>
             <button className="button primary full" type="submit">
-              Request a Consultation <CalendarCheck size={18} />
+              Request a Video Response <CalendarCheck size={18} />
             </button>
+            <p className="form-note">
+              Flat rate: $100. No live video calls or authority setup reviews at this
+              time.
+            </p>
             {submitted && (
               <p className="success-message" role="status">
-                <Check size={17} /> Request captured. Connect this form to a booking
-                service before launch.
+                <Check size={17} /> Request captured. Connect this form to a payment
+                and intake backend before launch.
               </p>
             )}
           </form>
@@ -364,21 +435,25 @@ function App() {
 
         <section className="resources-section" id="resources">
           <div>
-            <h2>Resources for the next decision</h2>
+            <h2>What the channel is really about</h2>
             <p>
-              Practical worksheets and checklists built around the same question:
-              what actually lands in the driver&apos;s pocket?
+              Trucking The Seven Seas documents trucking pay from the inside, using
+              real settlement data, public spreadsheets, and long-form video
+              breakdowns instead of vague averages or sales language.
+            </p>
+            <p>
+              The channel follows Tim&apos;s path through company driving, lease
+              operating, leased-on owner-operator work, running authority, and current
+              Amazon Relay power-only numbers so drivers can compare the tradeoffs
+              before making their own move.
             </p>
           </div>
           <div className="resource-list">
-            {resources.map((resource) => (
-              <a
-                href={resource === 'Owner-operator cost worksheet' ? '/owner-operator' : '#consulting'}
-                key={resource}
-              >
-                <span>{resource}</span>
-                <ChevronRight size={18} />
-              </a>
+            {synopsisPoints.map((point) => (
+              <div className="synopsis-row" key={point}>
+                <Check size={18} />
+                <span>{point}</span>
+              </div>
             ))}
           </div>
         </section>
@@ -386,11 +461,15 @@ function App() {
 
       <footer className="footer">
         <div>
+          <a className="footer-brand" href="#top" aria-label="Trucking The Seven Seas home">
+            <img src="/ttss-logo-mark.png" alt="" />
+            <span>Trucking The Seven Seas</span>
+          </a>
           <h2>Ready to talk numbers?</h2>
-          <p>Bring the offer, settlement, spreadsheet, or plan. Leave with clearer math.</p>
+          <p>Send a focused question list and get a straight-answer video response.</p>
         </div>
         <a className="button primary" href="#consulting">
-          Book a Consultation <ArrowRight size={18} />
+          Request a Video Response <ArrowRight size={18} />
         </a>
       </footer>
     </div>

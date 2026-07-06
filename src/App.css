@@ -25,9 +25,11 @@
 }
 
 .brand,
+.footer-brand,
 .nav a,
 .button,
 .text-link,
+.spreadsheet-link,
 .resource-list a {
   color: inherit;
   text-decoration: none;
@@ -48,12 +50,20 @@
 
 .brand-mark {
   display: inline-grid;
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 2.8rem;
+  height: 2.8rem;
   place-items: center;
-  color: var(--orange);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #050607;
+}
+
+.brand-mark img,
+.footer-brand img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .nav {
@@ -246,6 +256,13 @@ h1 {
   color: #fff;
   font-family: var(--display);
   font-size: 1.05rem;
+}
+
+.ledger-head strong em {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--orange);
+  font-style: normal;
 }
 
 .proof-strip {
@@ -497,64 +514,73 @@ h2 {
 .video-rail {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .video-tile {
   overflow: hidden;
-}
-
-.thumbnail {
-  position: relative;
   display: grid;
-  min-height: 11.5rem;
-  place-items: center;
-  color: var(--orange);
-  background:
-    linear-gradient(135deg, rgba(241, 93, 34, 0.45), rgba(15, 20, 26, 0.18)),
-    url('https://images.unsplash.com/photo-1506306460327-3164753b74c7?auto=format&fit=crop&w=900&q=78');
-  background-position: center;
-  background-size: cover;
+  align-content: start;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
 }
 
-.thumbnail::after {
-  content: '';
+.video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #050607;
+}
+
+.video-frame iframe {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.36);
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
-.thumbnail svg,
-.thumbnail span {
-  position: relative;
-  z-index: 1;
-}
-
-.thumbnail span {
-  position: absolute;
-  right: 0.8rem;
-  bottom: 0.65rem;
-  color: rgba(255, 255, 255, 0.76);
+.video-number {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding-inline: 1rem;
+  color: var(--orange);
   font-family: var(--display);
-  font-size: 2rem;
+  font-size: 1.25rem;
   font-weight: 900;
+  text-transform: uppercase;
 }
 
-.video-tile h3,
-.video-tile p {
+.video-number small {
+  color: rgba(255, 255, 255, 0.58);
+  font-family: var(--ui);
+  font-size: 0.67rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.video-tile h3 {
   padding-inline: 1rem;
 }
 
 .video-tile h3 {
-  padding-top: 1rem;
   font-size: 1.35rem;
   line-height: 1.05;
   text-transform: uppercase;
 }
 
-.video-tile p {
-  padding-block: 0.55rem 1rem;
-  font-size: 0.9rem;
+.spreadsheet-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+  margin-inline: 1rem;
+  color: var(--orange);
+  font-family: var(--ui);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
 
 .consulting-section {
@@ -688,6 +714,12 @@ h2 {
   font-size: 0.92rem;
 }
 
+.form-note {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 .story-section {
   grid-template-columns: minmax(16rem, 0.75fr) minmax(0, 1.25fr);
 }
@@ -743,8 +775,10 @@ h2 {
   border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
-.resource-list a {
-  justify-content: space-between;
+.resource-list a,
+.synopsis-row {
+  display: flex;
+  align-items: center;
   gap: 1rem;
   min-height: 4.2rem;
   padding: 0.9rem 0;
@@ -756,9 +790,25 @@ h2 {
   text-transform: uppercase;
 }
 
-.resource-list a svg {
+.resource-list a {
+  justify-content: space-between;
+}
+
+.synopsis-row {
+  align-items: flex-start;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--body);
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  font-weight: 650;
+  line-height: 1.45;
+  text-transform: none;
+}
+
+.resource-list a svg,
+.synopsis-row svg {
   color: var(--orange);
   flex: none;
+  margin-top: 0.2rem;
 }
 
 .footer {
@@ -767,6 +817,31 @@ h2 {
   padding: clamp(2.4rem, 5vw, 4rem) clamp(1rem, 4vw, 4.5rem);
   border-top: 1px solid rgba(255, 255, 255, 0.13);
   background: #0d1115;
+}
+
+.footer > div {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: fit-content;
+  color: #fff;
+  font-family: var(--display);
+  font-size: 0.95rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.footer-brand img {
+  width: 3.1rem;
+  height: 3.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #050607;
 }
 
 .footer h2 {
