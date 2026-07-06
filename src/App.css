@@ -293,7 +293,9 @@ h1 {
 }
 
 .pay-section {
-  grid-template-columns: minmax(18rem, 0.82fr) minmax(28rem, 1.18fr);
+  width: min(1320px, calc(100% - 2rem));
+  grid-template-columns: minmax(31rem, 0.9fr) minmax(35rem, 1.1fr);
+  gap: clamp(2rem, 3.5vw, 3.5rem);
 }
 
 .pay-section > *,
@@ -318,15 +320,16 @@ h2 {
 }
 
 .pay-section h2 {
-  max-width: 11ch;
-  font-size: clamp(2.8rem, 4.7vw, 4.9rem);
+  max-width: 13.5ch;
+  font-size: clamp(2.8rem, 4.15vw, 4.45rem);
+  overflow-wrap: normal;
 }
 
 .section-copy h2,
 .consulting-copy h2,
 .story-copy h2,
 .resources-section h2 {
-  overflow-wrap: normal;
+  overflow-wrap: break-word;
   text-wrap: balance;
 }
 
@@ -360,12 +363,13 @@ h2 {
 
 .ledger-panel {
   padding: clamp(1rem, 3vw, 1.35rem);
+  min-width: 0;
 }
 
 .path-tabs {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-bottom: 1rem;
 }
 
@@ -381,14 +385,17 @@ h2 {
 
 .path-tabs button {
   min-height: 2.6rem;
+  min-width: 0;
+  padding-inline: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.72);
   background: rgba(255, 255, 255, 0.04);
   font-family: var(--ui);
-  font-size: 0.72rem;
+  font-size: clamp(0.62rem, 0.82vw, 0.72rem);
   font-weight: 850;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .path-tabs button.active {
@@ -438,13 +445,15 @@ h2 {
   margin: 0;
   color: #fff;
   font-family: var(--display);
-  font-size: 1.35rem;
+  font-size: clamp(1.12rem, 1.8vw, 1.35rem);
   font-weight: 900;
+  text-align: right;
+  overflow-wrap: anywhere;
 }
 
 .ledger .net-row dd {
   color: var(--orange);
-  font-size: 1.75rem;
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
 }
 
 .ledger .note-row {
@@ -457,6 +466,8 @@ h2 {
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.55;
+  text-align: left;
+  overflow-wrap: normal;
 }
 
 .media-section {
