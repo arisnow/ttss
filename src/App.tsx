@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo, useState } from 'react'
 import {
   ArrowRight,
@@ -18,7 +20,6 @@ import {
   WalletCards,
   X,
 } from 'lucide-react'
-import './App.css'
 
 const payPaths = [
   {
@@ -124,6 +125,7 @@ function App() {
         </button>
         <nav className={menuOpen ? 'nav open' : 'nav'} aria-label="Primary navigation">
           <a href="#pay">Pay Breakdowns</a>
+          <a href="/owner-operator">Owner Tool</a>
           <a href="#consulting">Consulting</a>
           <a href="#videos">Videos</a>
           <a href="#resources">Resources</a>
@@ -370,7 +372,10 @@ function App() {
           </div>
           <div className="resource-list">
             {resources.map((resource) => (
-              <a href="#consulting" key={resource}>
+              <a
+                href={resource === 'Owner-operator cost worksheet' ? '/owner-operator' : '#consulting'}
+                key={resource}
+              >
                 <span>{resource}</span>
                 <ChevronRight size={18} />
               </a>
