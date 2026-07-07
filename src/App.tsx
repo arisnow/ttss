@@ -310,22 +310,14 @@ function App() {
         <ConsultationSection />
       </main>
 
-      <footer className="flex items-center justify-between gap-8 border-t border-white/15 bg-ttss-surface px-[clamp(1rem,4vw,4.5rem)] py-[clamp(2.4rem,5vw,4rem)] max-[900px]:flex-col max-[900px]:items-start">
-        <div className="grid gap-4">
-          <a className="inline-flex w-fit items-center gap-3 font-ttss-display text-[0.95rem] font-black tracking-[0.06em] text-white uppercase" href="#top" aria-label="Trucking The Seven Seas home">
-            <img className="size-12 border border-white/15 bg-[#050607] object-cover" src="/ttss-logo-mark.png" alt="" />
-            <span>Trucking The Seven Seas</span>
-          </a>
-          <h2 className="font-ttss-display text-[clamp(2rem,4vw,4.2rem)] leading-[0.95] font-black text-ttss-heading uppercase">
-            Ready to talk numbers?
-          </h2>
-          <p className="text-[1.02rem] leading-[1.65] text-[#eaeeef]/72">
-            Send a focused note about the numbers, decision, or spreadsheet you want reviewed.
-          </p>
-        </div>
-        <a className="inline-flex min-h-12 items-center justify-center gap-2 bg-ttss-orange px-4 font-ttss-body text-[0.82rem] font-black tracking-[0.07em] text-[#0c0b09] uppercase transition-transform hover:-translate-y-px" href="#consulting">
-          Request Consultation <ArrowRight size={18} />
+      <footer className="flex items-center justify-between gap-5 border-t border-white/15 bg-ttss-surface px-[clamp(1rem,4vw,4.5rem)] py-7 max-[720px]:flex-col max-[720px]:items-start">
+        <a className="inline-flex w-fit items-center gap-3 font-ttss-display text-[0.95rem] font-black tracking-[0.06em] text-white uppercase" href="#top" aria-label="Trucking The Seven Seas home">
+          <img className="size-12 border border-white/15 bg-[#050607] object-cover" src="/ttss-logo-mark.png" alt="" />
+          <span>Trucking The Seven Seas</span>
         </a>
+        <p className="text-sm leading-6 text-white/58">
+          Real trucking numbers, spreadsheets, and decision tools from the road.
+        </p>
       </footer>
     </div>
   )
