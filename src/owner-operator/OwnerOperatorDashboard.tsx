@@ -45,17 +45,26 @@ const ownerFields: FieldDef[] = [
 ]
 
 export function OwnerOperatorDashboard() {
-  const [state, setState] = useState<ModelState>(() => loadLocalState())
-  const [modelName, setModelName] = useState(() => activeVersion(state)?.name || 'Base case')
+  const [state, setState] = useState<ModelState>(() => normalizeModelState({}))
+  const [modelName, setModelName] = useState('Base case')
+  const [hasLoadedLocalState, setHasLoadedLocalState] = useState(false)
   const output = useMemo(() => calculateOwnerOperatorModel(state.blockCostModel), [state.blockCostModel])
 
   useEffect(() => {
+    const nextState = loadLocalState()
+    setState(nextState)
+    setModelName(activeVersion(nextState)?.name || 'Base case')
+    setHasLoadedLocalState(true)
+  }, [])
+
+  useEffect(() => {
+    if (!hasLoadedLocalState) return
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
     } catch {
       // Browser storage can be unavailable in private or restricted modes.
     }
-  }, [state])
+  }, [hasLoadedLocalState, state])
 
   function updateModelField(key: keyof BlockCostModel, value: string) {
     const numeric = Number(value)
