@@ -9,6 +9,7 @@ import {
   Play,
   Route,
   ShieldCheck,
+  Truck,
 } from 'lucide-react'
 import { ConsultationSection } from './ConsultationForm'
 import { PayBreakdown } from './PayBreakdown'
@@ -135,8 +136,8 @@ function App() {
                 leased on and owner operator with authority.
               </p>
               <div className="hero-actions">
-                <a className="button primary" href="#consulting">
-                  Book a Consultation <ArrowRight size={18} />
+                <a className="button primary" href="#pay">
+                  See Pay Breakdowns <ArrowRight size={18} />
                 </a>
                 <a className="button secondary" href="#videos">
                   <Play size={18} /> Watch Pay Breakdowns
@@ -209,7 +210,21 @@ function App() {
           </div>
         </section>
 
-        <ConsultationSection />
+        <section className="section owner-promo-section">
+          <div className="owner-promo-icon" aria-hidden="true">
+            <Truck size={46} />
+          </div>
+          <div className="owner-promo-copy">
+            <h2>Owner operator tool</h2>
+            <p>
+              Model weekly revenue, carrier terms, truck payments, insurance, maintenance,
+              and working capital before committing to a trucking business setup.
+            </p>
+            <a className="button primary" href="/owner-operator">
+              Open Owner Tool <ArrowRight size={18} />
+            </a>
+          </div>
+        </section>
 
         <section className="section story-section">
           <div className="story-image" aria-hidden="true">
@@ -264,6 +279,8 @@ function App() {
             ))}
           </div>
         </section>
+
+        <ConsultationSection />
       </main>
 
       <footer className="footer">

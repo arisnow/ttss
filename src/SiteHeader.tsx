@@ -29,12 +29,11 @@ export function SiteHeader({ brandHref = '#top', sectionPrefix = '' }: SiteHeade
       </button>
       <nav className={menuOpen ? 'nav open' : 'nav'} aria-label="Primary navigation">
         <a href={`${sectionPrefix}#pay`}>Pay Breakdowns</a>
-        <a href="/owner-operator">Owner Tool</a>
-        <a href={`${sectionPrefix}#consulting`}>Consulting</a>
         <a href={`${sectionPrefix}#videos`}>Videos</a>
+        <a href="/owner-operator">Owner Tool</a>
         <a href={`${sectionPrefix}#resources`}>Resources</a>
         <a className="nav-cta" href={`${sectionPrefix}#consulting`}>
-          Book <CalendarCheck size={16} />
+          Booking <CalendarCheck size={16} />
         </a>
       </nav>
     </header>
