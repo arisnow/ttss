@@ -220,7 +220,6 @@ h1 {
 }
 
 .button:hover,
-.consult-options button:hover,
 .path-tabs button:hover,
 .resource-list a:hover {
   transform: translateY(-1px);
@@ -391,7 +390,6 @@ h2 {
 }
 
 .path-tabs button,
-.consult-options button,
 .menu-toggle,
 .booking-form input,
 .booking-form select,
@@ -591,53 +589,6 @@ h2 {
 .consulting-copy h2 {
   max-width: 11ch;
   font-size: clamp(2.55rem, 4.1vw, 4.5rem);
-}
-
-.consult-options {
-  display: grid;
-  gap: 0.75rem;
-  margin-top: 0.3rem;
-}
-
-.consult-options button {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1rem;
-  align-items: center;
-  padding: 1rem;
-  color: #fff;
-  text-align: left;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.045);
-}
-
-.consult-options button.selected {
-  border-color: rgba(241, 93, 34, 0.82);
-  background: rgba(241, 93, 34, 0.12);
-}
-
-.consult-options strong,
-.consult-options small {
-  display: block;
-}
-
-.consult-options strong {
-  font-family: var(--display);
-  font-size: 1.2rem;
-  line-height: 1.05;
-  text-transform: uppercase;
-}
-
-.consult-options small {
-  margin-top: 0.35rem;
-  color: rgba(255, 255, 255, 0.66);
-  line-height: 1.45;
-}
-
-.consult-options b {
-  color: var(--orange);
-  font-family: var(--display);
-  font-size: 1.35rem;
 }
 
 .booking-form {
@@ -1333,8 +1284,7 @@ h2 {
     font-size: 1rem;
   }
 
-  .ledger div,
-  .consult-options button {
+  .ledger div {
     grid-template-columns: 1fr;
   }
 }

@@ -273,10 +273,10 @@ function App() {
             <span>Trucking The Seven Seas</span>
           </a>
           <h2>Ready to talk numbers?</h2>
-          <p>Send a focused question list and get a straight-answer video response.</p>
+          <p>Send a focused note about the numbers, decision, or spreadsheet you want reviewed.</p>
         </div>
         <a className="button primary" href="#consulting">
-          Request a Video Response <ArrowRight size={18} />
+          Request Consultation <ArrowRight size={18} />
         </a>
       </footer>
     </div>
