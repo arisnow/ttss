@@ -50,7 +50,11 @@ export function OwnerOperatorDashboard() {
   const output = useMemo(() => calculateOwnerOperatorModel(state.blockCostModel), [state.blockCostModel])
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+    } catch {
+      // Browser storage can be unavailable in private or restricted modes.
+    }
   }, [state])
 
   function updateModelField(key: keyof BlockCostModel, value: string) {

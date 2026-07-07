@@ -9,9 +9,9 @@ Modern website for Trucking The Seven Seas, a trucker and content creator focuse
 
 ## Tech Stack
 
+- Next.js App Router
 - React
 - TypeScript
-- Vite
 - Lucide React icons
 
 ## Local Development
@@ -36,4 +36,6 @@ npm run build
 
 ## Notes
 
-The booking form currently captures a local success state in the browser. Connect it to a scheduling or form backend before using it for live consultation requests.
+The booking form currently saves a local draft in the visitor's browser. Connect it to a payment, scheduling, or intake backend before using it for live consultation requests.
+
+The owner-operator tool also stores model versions locally in the visitor's browser. It does not require Supabase or any shared database.
