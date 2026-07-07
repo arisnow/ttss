@@ -12,13 +12,13 @@ export function SiteHeader({ brandHref = '#top', sectionPrefix = '' }: SiteHeade
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="fixed inset-x-0 top-0 z-20 flex items-center justify-between gap-5 border-b border-white/10 bg-[#07090b]/80 px-4 py-4 backdrop-blur-lg lg:px-18">
+    <header className="fixed inset-x-0 top-0 z-20 flex items-center justify-between gap-5 border-b border-white/10 bg-[#07090b]/80 px-4 py-3 backdrop-blur-lg lg:px-18">
       <a
         className="inline-flex min-w-0 items-center gap-3 font-ttss-display text-[0.98rem] font-black tracking-[0.04em] text-white uppercase"
         href={brandHref}
         aria-label="Trucking The Seven Seas home"
       >
-        <span className="grid size-11 place-items-center overflow-hidden border border-white/20 bg-[#050607]">
+        <span className="grid size-14 place-items-center overflow-hidden border border-white/20 bg-[#050607] max-[560px]:size-12">
           <img className="block size-full object-cover" src="/ttss-logo-mark.png" alt="" />
         </span>
         <span className="max-[560px]:max-w-52 max-[560px]:truncate">Trucking The Seven Seas</span>

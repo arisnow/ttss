@@ -123,6 +123,12 @@ function App() {
       <main id="top">
         <section className="hero-section relative grid min-h-[78vh] items-end isolate">
           <div className="hero-backdrop" aria-hidden="true" />
+          <img
+            className="hero-logo-mark"
+            src="/ttss-logo-mark.png"
+            alt=""
+            aria-hidden="true"
+          />
           <div className="mx-auto grid w-[min(1160px,calc(100%_-_2rem))] items-end gap-[clamp(2rem,5vw,4rem)] pt-[7.25rem] pb-[clamp(1.75rem,4.5vw,3.25rem)]">
             <div className="max-w-[780px]">
               <h1 className="max-w-[760px] font-ttss-display text-[clamp(3.8rem,8.6vw,7.2rem)] leading-[0.95] font-black text-ttss-heading uppercase max-[900px]:text-[clamp(3rem,12vw,4.55rem)]">

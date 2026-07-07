@@ -30,6 +30,18 @@
   mask-image: radial-gradient(circle at 50% 42%, black, transparent 68%);
 }
 
+.hero-logo-mark {
+  position: absolute;
+  z-index: -1;
+  top: clamp(5.8rem, 10vw, 7.4rem);
+  right: clamp(1rem, 2vw, 4rem);
+  width: clamp(8rem, 15vw, 14rem);
+  height: auto;
+  opacity: 0.86;
+  filter: drop-shadow(0 22px 42px rgba(0, 0, 0, 0.45));
+  pointer-events: none;
+}
+
 .owner-promo-icon,
 .resource-image,
 .consultation-image {
@@ -417,6 +429,19 @@
 @media (max-width: 900px) {
   .hero-section {
     min-height: 76vh;
+  }
+
+  .hero-logo-mark {
+    top: 6.2rem;
+    right: 1rem;
+    width: clamp(6.5rem, 28vw, 9rem);
+    opacity: 0.76;
+  }
+
+  @media (max-width: 560px) {
+    .hero-logo-mark {
+      display: none;
+    }
   }
 
   .hero-backdrop {
