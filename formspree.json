@@ -1,7 +1,13 @@
 {
   "forms": {
     "consultation": {
-      "name": "TTSS Consultation Inquiry"
+      "name": "TTSS Consultation Inquiry",
+      "actions": [
+        {
+          "type": "email",
+          "to": "fraserjpmckay@gmail.com"
+        }
+      ]
     }
   }
 }
