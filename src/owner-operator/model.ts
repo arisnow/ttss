@@ -3,11 +3,9 @@ import type { BlockCostModel, ModelOutput, ModelState, ModelVersion, StatementRo
 export const DEFAULT_MODEL_VERSION_ID = "base-case";
 
 export const DEFAULT_BLOCK_COST_MODEL: BlockCostModel = {
-  ownerModelVersion: 8,
-  blockPrice: 1800,
-  blockDays: 2,
-  blocksPerWeek: 2.5,
-  maintenancePerBlock: 200,
+  ownerModelVersion: 9,
+  avgWeeklyRevenue: 4500,
+  maintenanceWeekly: 500,
   insuranceMonthly: 1400,
   registrationMonthly: 250,
   parkingMonthly: 500,
@@ -104,12 +102,10 @@ export function saveVersion(state: ModelState, nameValue: string, model: BlockCo
 }
 
 export function calculateOwnerOperatorModel(model: BlockCostModel): ModelOutput {
-  const blockPrice = positive(model.blockPrice);
-  const blockDays = Math.max(0.1, positive(model.blockDays));
-  const maintenance = positive(model.maintenancePerBlock);
-  const blocksPerWeek = positive(model.blocksPerWeek);
-  const operatingDaysPerWeek = blocksPerWeek * blockDays;
+  const grossPerWeek = positive(model.avgWeeklyRevenue);
+  const maintenanceWeekly = positive(model.maintenanceWeekly);
   const weeksPerYear = positive(model.weeksPerYear);
+  const operatingDaysPerWeek = Math.max(1, positive(model.daysPerWeek));
   const workHoursPerWeek = positive(model.workHoursPerWeek);
   const truckPrice = positive(model.truckPrice);
   const financingTermMonths = positive(model.financingTermMonths);
@@ -130,11 +126,10 @@ export function calculateOwnerOperatorModel(model: BlockCostModel): ModelOutput 
   const registrationMonthly = positive(model.registrationMonthly);
   const adminMonthly = positive(model.adminMonthly);
 
-  const grossPerDay = blockPrice / blockDays;
-  const grossPerWeek = blockPrice * blocksPerWeek;
+  const grossPerDay = grossPerWeek / operatingDaysPerWeek;
   const annualGross = grossPerWeek * weeksPerYear;
   const operatingDaysPerYear = operatingDaysPerWeek * weeksPerYear;
-  const annualMaintenance = maintenance * blocksPerWeek * weeksPerYear;
+  const annualMaintenance = maintenanceWeekly * weeksPerYear;
   const annualParking = parkingMonthly * 12;
   const annualInsurance = insuranceMonthly * 12;
   const annualRegistration = registrationMonthly * 12;
@@ -174,7 +169,7 @@ export function calculateOwnerOperatorModel(model: BlockCostModel): ModelOutput 
   const privateStatementRows: StatementRow[] = [
     row("Revenue", grossPerDay, grossPerWeek, annualGross / 12, annualGross),
     { label: "Costs", values: zeroPeriod(), type: "section" },
-    row("Maintenance reserve", -(maintenance / blockDays), -(maintenance * blocksPerWeek), -annualMaintenance / 12, -annualMaintenance),
+    row("Maintenance reserve", -(maintenanceWeekly / operatingDaysPerWeek), -maintenanceWeekly, -annualMaintenance / 12, -annualMaintenance),
     row("Insurance", -(annualInsurance / Math.max(1, operatingDaysPerYear)), -(annualInsurance / Math.max(1, weeksPerYear)), -insuranceMonthly, -annualInsurance),
     row("Registration & permits", -(annualRegistration / Math.max(1, operatingDaysPerYear)), -(annualRegistration / Math.max(1, weeksPerYear)), -registrationMonthly, -annualRegistration),
     row("Truck parking", -(annualParking / Math.max(1, operatingDaysPerYear)), -(annualParking / Math.max(1, weeksPerYear)), -parkingMonthly, -annualParking),
@@ -187,9 +182,6 @@ export function calculateOwnerOperatorModel(model: BlockCostModel): ModelOutput 
   ];
 
   return {
-    blockPrice,
-    blockDays,
-    blocksPerWeek,
     weeksPerYear,
     workHoursPerWeek,
     grossPerDay,
@@ -212,13 +204,13 @@ export function calculateOwnerOperatorModel(model: BlockCostModel): ModelOutput 
     startupCash,
     leasePaybackMonths,
     decisionCards: [
-      { label: "Modeled Relay revenue", value: formatUsd(annualGross), note: `${formatUsd(grossPerWeek)}/week target workload` },
+      { label: "Modeled gross revenue", value: formatUsd(annualGross), note: `${formatUsd(grossPerWeek)}/week target revenue` },
       { label: "Carrier fee", value: formatUsd(carrierFeeAnnual), note: `${formatNumber(carrierFeePercent, "%")} of modeled revenue` },
       { label: "Settlement deductions", value: formatUsd(leaseInsuranceAnnual + leaseAdminAnnual), note: "Insurance and admin/compliance/plates" },
       { label: "Projected owner income", value: formatUsd(leaseAnnualNet), note: `${formatUsd(leaseMonthlyNet)}/mo - ${formatUsd(leaseNetPerHour)}/hr` }
     ],
     settlementRows: [
-      { label: "Modeled Relay revenue", annual: annualGross },
+      { label: "Modeled gross revenue", annual: annualGross },
       { label: `Carrier fee (${formatNumber(carrierFeePercent, "%")} of modeled revenue)`, annual: -carrierFeeAnnual },
       { label: "Insurance deductions", annual: -leaseInsuranceAnnual },
       { label: "Admin/compliance/plates deductions", annual: -leaseAdminAnnual },

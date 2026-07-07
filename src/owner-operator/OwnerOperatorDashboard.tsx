@@ -22,9 +22,7 @@ type FieldDef = {
 const STORAGE_KEY = 'ttss:owner-operator-model'
 
 const revenueFields: FieldDef[] = [
-  { key: 'blockPrice', label: 'Avg block price', step: 50 },
-  { key: 'blockDays', label: 'Days / block', step: 0.5 },
-  { key: 'blocksPerWeek', label: 'Blocks / week', step: 0.25 },
+  { key: 'avgWeeklyRevenue', label: 'Avg weekly revenue', step: 50 },
   { key: 'weeksPerYear', label: 'Work weeks / year', step: 1 },
   { key: 'workHoursPerWeek', label: 'Work hours / week', step: 1 },
 ]
@@ -40,7 +38,7 @@ const ownerFields: FieldDef[] = [
   { key: 'downPayment', label: 'Down payment', step: 1000 },
   { key: 'financingTermMonths', label: 'Financing term / months', step: 12 },
   { key: 'financingApr', label: 'Financing APR %', step: 0.25 },
-  { key: 'maintenancePerBlock', label: 'Maintenance / block', step: 25 },
+  { key: 'maintenanceWeekly', label: 'Maintenance reserve / week', step: 25 },
   { key: 'parkingMonthly', label: 'Truck parking / month', step: 25 },
 ]
 
@@ -108,7 +106,7 @@ export function OwnerOperatorDashboard() {
         <div>
           <h2>Owner-operator economics</h2>
           <p>
-            Model a purchased tractor, lease-on deductions, and owner-paid costs before
+            Model a purchased tractor, carrier deductions, and owner-paid costs before
             committing to the next business move.
           </p>
         </div>
@@ -154,7 +152,7 @@ export function OwnerOperatorDashboard() {
             </p>
           </section>
 
-          <AssumptionGroup title="Revenue" fields={revenueFields} model={state.blockCostModel} onChange={updateModelField} />
+          <AssumptionGroup title="Revenue" fields={revenueFields} model={state.blockCostModel} onChange={updateModelField} defaultOpen />
           <AssumptionGroup title="Carrier Terms" fields={carrierFields} model={state.blockCostModel} onChange={updateModelField} />
           <AssumptionGroup title="Owner-Paid" fields={ownerFields} model={state.blockCostModel} onChange={updateModelField} />
 
@@ -162,7 +160,6 @@ export function OwnerOperatorDashboard() {
             <h4>Calculated Summary</h4>
             <AssumptionRow label="Annual revenue" value={formatUsd(output.annualGross)} />
             <AssumptionRow label="Weekly revenue" value={formatUsd(output.grossPerWeek)} />
-            <AssumptionRow label="Blocks / week" value={formatNumber(output.blocksPerWeek)} />
             <AssumptionRow label="Truck payment" value={`${formatUsd(output.truckPaymentMonthly)}/mo`} />
             <AssumptionRow label="Annual carrier fee" value={formatUsd(output.carrierFeeAnnual)} />
           </section>
@@ -170,7 +167,7 @@ export function OwnerOperatorDashboard() {
 
         <section className="owner-statement">
           <section className="owner-statement-head">
-            <h3>Lease-On Authority Discussion Sheet</h3>
+            <h3>Owner-Operator Operating Model</h3>
             <p>Draft settlement economics with weekly, monthly, and annual views.</p>
           </section>
 
@@ -186,7 +183,7 @@ export function OwnerOperatorDashboard() {
 
           <section className="owner-statement-section">
             <header>
-              <h4>Lease-On Settlement View</h4>
+              <h4>Operating Statement View</h4>
               <p>Draft owner-operator settlement model before final written terms.</p>
             </header>
             <SettlementTable output={output} weeksPerYear={state.blockCostModel.weeksPerYear} />
@@ -195,7 +192,7 @@ export function OwnerOperatorDashboard() {
           <section className="owner-statement-section">
             <header>
               <h4>Model Notes</h4>
-              <p>Key assumptions reflected in the lease-on settlement view.</p>
+              <p>Key assumptions reflected in the operating statement view.</p>
             </header>
             <Notes model={state.blockCostModel} output={output} />
           </section>
@@ -210,15 +207,19 @@ function AssumptionGroup({
   fields,
   model,
   onChange,
+  defaultOpen = false,
 }: {
   title: string
   fields: FieldDef[]
   model: BlockCostModel
   onChange: (key: keyof BlockCostModel, value: string) => void
+  defaultOpen?: boolean
 }) {
   return (
-    <section className="owner-assumption-group">
-      <h4>{title}</h4>
+    <details className="owner-assumption-group" open={defaultOpen}>
+      <summary>
+        <h4>{title}</h4>
+      </summary>
       {fields.map((field) => (
         <label key={field.key}>
           {field.label}
@@ -231,7 +232,7 @@ function AssumptionGroup({
           />
         </label>
       ))}
-    </section>
+    </details>
   )
 }
 
@@ -288,7 +289,7 @@ function Notes({
   const insuranceTotalMonthly =
     model.carrierInsuranceMonthly + model.physicalDamageMonthly + model.bobtailMonthly
   const notes = [
-    ['Revenue target', `Model uses ${formatUsd(output.grossPerWeek)} per week from ${formatNumber(model.blocksPerWeek)} blocks per week as the operating target.`],
+    ['Revenue target', `Model uses ${formatUsd(output.grossPerWeek)} per week as the operating target.`],
     ['Carrier fee', `Model assumes a ${formatNumber(model.carrierFeePercent, '%')} carrier fee on modeled revenue.`],
     ['Fuel surcharge', 'Fuel surcharge and accessorials are assumed to pass through to the owner-operator.'],
     ['Insurance', `${formatUsd(insuranceTotalMonthly)} per month is modeled as one combined insurance deduction.`],

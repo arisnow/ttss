@@ -955,6 +955,34 @@ h2 {
   gap: 0.7rem;
 }
 
+.owner-assumption-group {
+  align-content: start;
+}
+
+.owner-assumption-group summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.owner-assumption-group summary::-webkit-details-marker {
+  display: none;
+}
+
+.owner-assumption-group summary::after {
+  content: "+";
+  color: #00548a;
+  font-family: var(--ui);
+  font-weight: 900;
+}
+
+.owner-assumption-group[open] summary::after {
+  content: "-";
+}
+
 .owner-version-card h4,
 .owner-assumption-group h4,
 .owner-summary h4,

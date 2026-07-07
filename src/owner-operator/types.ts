@@ -1,9 +1,7 @@
 export type BlockCostModel = {
   ownerModelVersion: number;
-  blockPrice: number;
-  blockDays: number;
-  blocksPerWeek: number;
-  maintenancePerBlock: number;
+  avgWeeklyRevenue: number;
+  maintenanceWeekly: number;
   insuranceMonthly: number;
   registrationMonthly: number;
   parkingMonthly: number;
@@ -68,9 +66,6 @@ export type DecisionCard = {
 };
 
 export type ModelOutput = {
-  blockPrice: number;
-  blockDays: number;
-  blocksPerWeek: number;
   weeksPerYear: number;
   workHoursPerWeek: number;
   grossPerDay: number;
