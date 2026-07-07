@@ -1,13 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { FormspreeProvider, useForm, ValidationError } from '@formspree/react'
 import { CalendarCheck, Check, MessageSquareText } from 'lucide-react'
 
-const CONSULTATION_DRAFT_KEY = 'ttss:consultation-draft'
+const FORMSPREE_PROJECT_ID = process.env.NEXT_PUBLIC_FORMSPREE_PROJECT_ID
+const FORMSPREE_FORM_KEY = process.env.NEXT_PUBLIC_FORMSPREE_FORM_KEY ?? 'consultation'
 
 export function ConsultationSection() {
-  const [submissionMessage, setSubmissionMessage] = useState('')
-
   return (
     <section className="section consulting-section" id="consulting">
       <div className="consulting-copy">
@@ -23,32 +22,24 @@ export function ConsultationSection() {
         </p>
       </div>
 
-      <form
-        className="booking-form"
-        onSubmit={(event) => {
-          event.preventDefault()
-          const form = event.currentTarget
-          const formData = new FormData(form)
-          const draft = {
-            name: String(formData.get('name') || ''),
-            email: String(formData.get('email') || ''),
-            phone: String(formData.get('phone') || ''),
-            topic: String(formData.get('topic') || ''),
-            message: String(formData.get('message') || ''),
-            savedAt: new Date().toISOString(),
-          }
-          try {
-            window.localStorage.setItem(CONSULTATION_DRAFT_KEY, JSON.stringify(draft))
-            setSubmissionMessage(
-              'Inquiry saved in this browser. Connect an email or form workflow before using this for live requests.',
-            )
-          } catch {
-            setSubmissionMessage(
-              'Inquiry could not be saved in this browser. Connect an email or form workflow before using this for live requests.',
-            )
-          }
-        }}
-      >
+      {FORMSPREE_PROJECT_ID ? (
+        <FormspreeProvider project={FORMSPREE_PROJECT_ID}>
+          <ConsultationForm />
+        </FormspreeProvider>
+      ) : (
+        <ConsultationForm disabled />
+      )}
+    </section>
+  )
+}
+
+function ConsultationForm({ disabled = false }: { disabled?: boolean }) {
+  const [state, handleSubmit] = useForm(FORMSPREE_FORM_KEY)
+
+  return (
+    <form className="booking-form" onSubmit={handleSubmit}>
+      <input type="hidden" name="_subject" value="New TTSS consultation inquiry" />
+      <input type="hidden" name="source" value="Trucking The Seven Seas website" />
         <div className="form-head">
           <MessageSquareText size={25} />
           <div>
@@ -58,19 +49,32 @@ export function ConsultationSection() {
         </div>
         <label>
           Name
-          <input required name="name" placeholder="Your name" />
+          <input required disabled={disabled || state.submitting} name="name" placeholder="Your name" />
+          <ValidationError className="error-message" errors={state.errors} field="name" />
         </label>
         <label>
           Email
-          <input required name="email" type="email" placeholder="you@example.com" />
+          <input
+            required
+            disabled={disabled || state.submitting}
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+          />
+          <ValidationError className="error-message" errors={state.errors} field="email" />
         </label>
         <label>
           Phone
-          <input name="phone" type="tel" placeholder="Optional" />
+          <input disabled={disabled || state.submitting} name="phone" type="tel" placeholder="Optional" />
+          <ValidationError className="error-message" errors={state.errors} field="phone" />
         </label>
         <label>
           Topic
-          <select name="topic" defaultValue="Pay or settlement review">
+          <select
+            disabled={disabled || state.submitting}
+            name="topic"
+            defaultValue="Pay or settlement review"
+          >
             <option>Pay or settlement review</option>
             <option>Lease decision</option>
             <option>Owner-operator costs</option>
@@ -86,21 +90,27 @@ export function ConsultationSection() {
             maxLength={1600}
             name="message"
             placeholder="Share the decision, offer, spreadsheet, numbers, or questions you want Tim to look at."
+            disabled={disabled || state.submitting}
           />
+          <ValidationError className="error-message" errors={state.errors} field="message" />
         </label>
-        <button className="button primary full" type="submit">
-          Request Consultation <CalendarCheck size={18} />
+        <button className="button primary full" type="submit" disabled={disabled || state.submitting}>
+          {state.submitting ? 'Sending...' : 'Request Consultation'} <CalendarCheck size={18} />
         </button>
         <p className="form-note">
-          This inquiry stays in your browser until an email or form workflow is
-          connected.
+          This sends your inquiry through Formspree so Tim can follow up directly.
         </p>
-        {submissionMessage && (
+        <ValidationError className="error-message" errors={state.errors} />
+        {disabled && (
+          <p className="error-message" role="status">
+            Formspree is not configured for this environment.
+          </p>
+        )}
+        {state.succeeded && (
           <p className="success-message" role="status">
-            <Check size={17} /> {submissionMessage}
+            <Check size={17} /> Inquiry sent. Tim can follow up from here.
           </p>
         )}
       </form>
-    </section>
   )
 }
