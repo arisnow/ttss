@@ -4,6 +4,20 @@ export const metadata = {
   title: 'Owner-Operator Economics | Trucking The Seven Seas',
   description:
     'A local owner-operator economics worksheet for modeling lease-on revenue, truck payments, carrier deductions, and owner-paid costs.',
+  alternates: {
+    canonical: '/owner-operator',
+  },
+  openGraph: {
+    title: 'Owner-Operator Economics | Trucking The Seven Seas',
+    description:
+      'Model lease-on revenue, truck payments, carrier deductions, and owner-paid costs in a browser-local trucking worksheet.',
+    url: '/owner-operator',
+  },
+  twitter: {
+    title: 'Owner-Operator Economics | Trucking The Seven Seas',
+    description:
+      'Model lease-on revenue, truck payments, carrier deductions, and owner-paid costs in a browser-local trucking worksheet.',
+  },
 }
 
 export default function OwnerOperatorPage() {
