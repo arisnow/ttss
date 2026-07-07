@@ -72,8 +72,7 @@ export function OwnerOperatorDashboard() {
       ...state.blockCostModel,
       [key]: Number.isFinite(numeric) ? numeric : 0,
     })
-    const nextState = { ...state, blockCostModel: nextModel }
-    setState(isEditingActiveVersion(state, modelName) ? syncActiveVersion(nextState) : nextState)
+    setState({ ...state, blockCostModel: nextModel })
   }
 
   function selectVersion(id: string) {
@@ -311,24 +310,4 @@ function loadLocalState(): ModelState {
 
 function activeVersion(state: Pick<ModelState, 'modelVersions' | 'activeModelId'>): ModelVersion | null {
   return state.modelVersions.find((version) => version.id === state.activeModelId) || state.modelVersions[0] || null
-}
-
-function isEditingActiveVersion(
-  state: Pick<ModelState, 'modelVersions' | 'activeModelId'>,
-  modelName: string,
-): boolean {
-  return activeVersion(state)?.name.trim().toLowerCase() === modelName.trim().toLowerCase()
-}
-
-function syncActiveVersion(state: ModelState): ModelState {
-  const now = new Date().toISOString()
-  return normalizeModelState({
-    ...state,
-    modelVersions: state.modelVersions.map((version) =>
-      version.id === state.activeModelId
-        ? { ...version, blockCostModel: state.blockCostModel, updatedAt: now }
-        : version,
-    ),
-    updatedAt: now,
-  })
 }
