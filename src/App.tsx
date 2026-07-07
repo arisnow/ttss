@@ -1,6 +1,5 @@
 import {
   ArrowRight,
-  Check,
   ClipboardList,
   ExternalLink,
   FileSpreadsheet,
@@ -58,10 +57,65 @@ const videos = [
   },
 ] as const
 
-const synopsisPoints = [
-  'Transparent trucking pay from company driver through lease operator, leased-on owner operator, authority, and Amazon Relay power-only work.',
-  'Final-number videos paired with public spreadsheets so viewers can see revenue, expenses, net, and context instead of relying on recruiter math.',
-  'Practical road commentary about deductions, freight choices, deadhead, home time, and the tradeoffs behind each business model.',
+const resourceGroups = [
+  {
+    title: 'Spreadsheets and templates',
+    links: [
+      {
+        label: 'Startup Costs / Authority P/L Spreadsheet',
+        href: 'https://docs.google.com/spreadsheets/d/1OM_01BVB9uGBCQtLklKFDjiGXB7sj6vvC-cWnuRusOc/edit?gid=1522467381#gid=1522467381',
+      },
+      {
+        label: 'Landstar Profit / Loss Spreadsheet',
+        href: 'https://docs.google.com/spreadsheets/d/1GRc2Propb95tHqjA5SQY7fg16c67PXQ4Or0mBidh1cU/edit#gid=399595632',
+      },
+      {
+        label: 'Lease Profit / Loss Spreadsheet',
+        href: 'https://docs.google.com/spreadsheets/d/19wKorxQCaQWMsK7rjDo1e_xHzXbFUuPUlpm7HWDv20E/edit?usp=sharing',
+      },
+      {
+        label: 'Blank Template Lease P/L',
+        href: 'https://docs.google.com/spreadsheets/d/1LbaqMPAmAQIDBrn4zHO3r5iUM-uPX7OfQ5btDEBgVSc/edit?usp=sharing',
+      },
+      {
+        label: 'Lease Analysis Spreadsheet',
+        href: 'https://docs.google.com/spreadsheets/d/1SzT0-iBJLLuJ5yDN0q5mGSkH2jEn_KUk4e_8Wt8aytM/edit?usp=sharing',
+      },
+      {
+        label: 'Company Pay Spreadsheet',
+        href: 'https://docs.google.com/spreadsheets/d/1wGEHZkK7Y0jglo9Wy-lk8_KGth-wdDAONiXbmh5H6J8/edit?usp=sharing',
+      },
+      {
+        label: 'Blank Company Driver Spreadsheet',
+        href: 'https://docs.google.com/spreadsheets/d/1rMlfUJn0zlyCrWnVN81fx_jlydY-1NwDids2YOVHTFk/edit#gid=838522823',
+      },
+      {
+        label: 'Maintenance Cover Word Doc',
+        href: 'https://docs.google.com/document/d/1jyN5kXH7QgomSmvE3fQZGRpmbq4Vkz0owyp0KeKb58s/edit',
+      },
+    ],
+  },
+  {
+    title: 'Channel links',
+    links: [
+      {
+        label: 'Support Tim on Buy Me a Coffee',
+        href: 'https://buymeacoffee.com/truckingthesevenseas',
+      },
+      {
+        label: 'Windshield Thoughts',
+        href: 'https://www.youtube.com/channel/UC6ByG4ZeXiS7xaWhqP4B_AQ',
+      },
+      {
+        label: 'This Week in Trucking',
+        href: 'https://www.youtube.com/@thisweekintrucking',
+      },
+      {
+        label: 'OTR Solutions Factoring Link',
+        href: 'https://otrsolutions.com/referrals-inquiry-page/?tfa_37=001PZ00000PlklrYAB',
+      },
+    ],
+  },
 ] as const
 
 function App() {
@@ -197,10 +251,15 @@ function App() {
             </p>
           </div>
           <div className="resource-list">
-            {synopsisPoints.map((point) => (
-              <div className="synopsis-row" key={point}>
-                <Check size={18} />
-                <span>{point}</span>
+            {resourceGroups.map((group) => (
+              <div className="resource-group" key={group.title}>
+                <h3>{group.title}</h3>
+                {group.links.map((link) => (
+                  <a href={link.href} target="_blank" rel="noreferrer" key={link.href}>
+                    <span>{link.label}</span>
+                    <ExternalLink size={18} />
+                  </a>
+                ))}
               </div>
             ))}
           </div>
