@@ -30,6 +30,7 @@ export function ConsultationSection() {
           want reviewed, and the best way to reach you. Tim can follow up with the right
           format, timing, and price once the offer is finalized.
         </p>
+        <div className="consultation-image" aria-hidden="true" />
       </div>
 
       {FORMSPREE_PROJECT_ID ? (

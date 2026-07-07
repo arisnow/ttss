@@ -1,13 +1,9 @@
 import {
   ArrowRight,
-  ClipboardList,
   ExternalLink,
-  FileSpreadsheet,
   Fuel,
   Gauge,
-  Map,
   Play,
-  Route,
   ShieldCheck,
   Truck,
 } from 'lucide-react'
@@ -238,32 +234,6 @@ function App() {
           </div>
         </section>
 
-        <section className="relative mx-auto grid w-[min(1160px,calc(100%_-_2rem))] grid-cols-[minmax(16rem,0.75fr)_minmax(0,1.25fr)] items-center gap-[clamp(2rem,5vw,4rem)] py-[clamp(4rem,8vw,7rem)] max-[900px]:grid-cols-1">
-          <div className="story-image" aria-hidden="true">
-            <Route size={42} />
-          </div>
-          <div className="grid gap-5">
-            <h2 className="font-ttss-display text-[clamp(2.5rem,5.8vw,5.8rem)] leading-[0.95] font-black text-ttss-heading uppercase">
-              Built from miles, spreadsheets, and hard lessons
-            </h2>
-            <p className="text-[1.02rem] leading-[1.65] text-[#eaeeef]/72">
-              From company driver to lease operator, Landstar owner-operator, and
-              running authority, the channel documents the numbers behind each step.
-            </p>
-            <ul className="m-0 grid list-none gap-3 p-0">
-              <li className="flex items-center gap-3 text-white/80">
-                <Map className="shrink-0 text-ttss-orange" size={20} /> Lanes, deadhead, and planning tradeoffs
-              </li>
-              <li className="flex items-center gap-3 text-white/80">
-                <ClipboardList className="shrink-0 text-ttss-orange" size={20} /> Pay-plan questions before you sign
-              </li>
-              <li className="flex items-center gap-3 text-white/80">
-                <FileSpreadsheet className="shrink-0 text-ttss-orange" size={20} /> Spreadsheet-first decision making
-              </li>
-            </ul>
-          </div>
-        </section>
-
         <section
           className="mx-auto grid w-[min(1160px,calc(100%_-_2rem))] grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] items-start gap-8 py-[clamp(3rem,7vw,6rem)] max-[1280px]:grid-cols-1"
           id="resources"
@@ -283,6 +253,7 @@ function App() {
               Amazon Relay power-only numbers so drivers can compare the tradeoffs
               before making their own move.
             </p>
+            <div className="resource-image mt-8" aria-hidden="true" />
           </div>
           <div className="grid gap-5">
             {resourceGroups.map((group) => (
