@@ -854,6 +854,10 @@ h2 {
   padding: clamp(4rem, 8vw, 7rem) 0;
 }
 
+.owner-page {
+  padding-top: 4.85rem;
+}
+
 .owner-tool-head {
   display: flex;
   align-items: end;

@@ -1,4 +1,5 @@
 import { OwnerOperatorDashboard } from '../../src/owner-operator/OwnerOperatorDashboard'
+import { SiteHeader } from '../../src/SiteHeader'
 
 export const metadata = {
   title: 'Owner-Operator Economics | Trucking The Seven Seas',
@@ -22,8 +23,11 @@ export const metadata = {
 
 export default function OwnerOperatorPage() {
   return (
-    <main className="owner-page">
-      <OwnerOperatorDashboard />
-    </main>
+    <div className="site-shell">
+      <SiteHeader brandHref="/" sectionPrefix="/" />
+      <main className="owner-page" id="top">
+        <OwnerOperatorDashboard />
+      </main>
+    </div>
   )
 }
