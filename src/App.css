@@ -1009,6 +1009,13 @@ h2 {
   background: #fff;
 }
 
+.owner-version-note {
+  margin: 0;
+  color: #657384;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
 .owner-assumption-row {
   display: flex;
   align-items: center;

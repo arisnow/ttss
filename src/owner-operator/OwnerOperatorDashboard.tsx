@@ -48,6 +48,9 @@ export function OwnerOperatorDashboard() {
   const [state, setState] = useState<ModelState>(() => normalizeModelState({}))
   const [modelName, setModelName] = useState('Base case')
   const [hasLoadedLocalState, setHasLoadedLocalState] = useState(false)
+  const selectedVersion = activeVersion(state)
+  const isSavingAsNewVersion =
+    selectedVersion?.name.trim().toLowerCase() !== modelName.trim().toLowerCase()
   const output = useMemo(() => calculateOwnerOperatorModel(state.blockCostModel), [state.blockCostModel])
 
   useEffect(() => {
@@ -142,8 +145,13 @@ export function OwnerOperatorDashboard() {
               />
             </label>
             <button type="button" onClick={handleSaveVersion}>
-              Save version
+              {isSavingAsNewVersion ? 'Save as new version' : 'Save changes'}
             </button>
+            <p className="owner-version-note">
+              {isSavingAsNewVersion
+                ? 'This will save the current assumptions as a separate model.'
+                : 'Changes are drafts until saved to this model.'}
+            </p>
           </section>
 
           <AssumptionGroup title="Revenue" fields={revenueFields} model={state.blockCostModel} onChange={updateModelField} />
